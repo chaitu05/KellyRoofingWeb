@@ -7,7 +7,7 @@
         </layout>
     </appender>
 
-    <appender name="FILE"
+    <!--<appender name="FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/kelly-roofing-web.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -20,13 +20,13 @@
         <encoder>
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS},[%thread] %-5level %logger{36} - %msg%n</Pattern>
         </encoder>
-    </appender>
+    </appender> -->
 
     <logger name="com.zaxxer.hikari.pool" level="ERROR" />
     <logger name="com.vavv.web" level="DEBUG" />
 
     <root>
-        <appender-ref ref="FILE" />
+        <!--appender-ref ref="FILE" /-->
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
