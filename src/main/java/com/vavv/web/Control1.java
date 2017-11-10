@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
  *  * Created by cmynam on 11/9/17.
  *   */
 @RestController
-@RequestMapping("/control1")
+@RequestMapping("/testcontrol")
 public class Control1 {
 	@RequestMapping("/hello")
 	public String sayHello() {
