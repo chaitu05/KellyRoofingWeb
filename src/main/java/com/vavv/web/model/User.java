@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(name = "User")
 @Table(name = "user")
@@ -12,7 +13,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public User(String firstName, String lastName, String licenseNum, Date dob, String username, String password, String email) {
+    public User(String firstName, String lastName, String licenseNum, Date dob, String username, String password, String email, UserRole role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.licenseNum = licenseNum;
@@ -20,6 +21,7 @@ public class User implements Serializable {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     public User() {
@@ -45,6 +47,8 @@ public class User implements Serializable {
     private String password;
     @Column(name = "email")
     private String email;
+    @Column(name = "role")
+    private UserRole role;
 
     public String getGuid() {
         return guid;
@@ -102,30 +106,17 @@ public class User implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
-
         User user = (User) o;
-
-        if (!guid.equals(user.guid)) return false;
-        if (!firstName.equals(user.firstName)) return false;
-        if (!lastName.equals(user.lastName)) return false;
-        if (licenseNum != null ? !licenseNum.equals(user.licenseNum) : user.licenseNum != null) return false;
-        if (dob != null ? !dob.equals(user.dob) : user.dob != null) return false;
-        if (!username.equals(user.username)) return false;
-        if (!password.equals(user.password)) return false;
-        return email != null ? email.equals(user.email) : user.email == null;
+        return Objects.equals(guid, user.guid) &&
+                Objects.equals(licenseNum, user.licenseNum) &&
+                Objects.equals(username, user.username) &&
+                role == user.role;
     }
 
     @Override
     public int hashCode() {
-        int result = guid.hashCode();
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + (licenseNum != null ? licenseNum.hashCode() : 0);
-        result = 31 * result + (dob != null ? dob.hashCode() : 0);
-        result = 31 * result + username.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        return result;
+
+        return Objects.hash(guid, licenseNum, username, role);
     }
 
     @Override
@@ -139,6 +130,7 @@ public class User implements Serializable {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 
@@ -148,5 +140,13 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }
