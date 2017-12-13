@@ -26,7 +26,15 @@ public class LoginController {
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity login(@RequestBody User user) {
+
         System.out.println("User: " + user);
+
+        // query userRepository with username, pass
+
+        // create JWT token with role, userId
+
+        // create ResponseEntity with success to true and JWT token.
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("1", "uno");
         return new ResponseEntity(new Object() {
