@@ -9,20 +9,12 @@ import java.util.Objects;
 
 @Entity(name = "User")
 @Table(name = "user")
+@NamedNativeQuery(name = "User.getUserByUsernameAndPassword",
+        query = "SELECT * FROM User user WHERE BINARY user.username = :username AND BINARY user.password = :password",
+        resultClass = User.class)
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    public User(String firstName, String lastName, String licenseNum, Date dob, String username, String password, String email, UserRole role) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.licenseNum = licenseNum;
-        this.dob = dob;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-    }
 
     public User() {
     }
@@ -35,23 +27,38 @@ public class User implements Serializable {
 
     @Column(name = "firstName")
     private String firstName;
+
     @Column(name = "lastName")
     private String lastName;
+
     @Column(name = "licenseNum")
     private String licenseNum;
+
     @Column(name = "dob")
     private Date dob;
+
     @Column(name = "username")
     private String username;
+
     @Column(name = "password")
     private String password;
+
+    @Column(name = "salt")
+    private String salt;
+
     @Column(name = "email")
     private String email;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private UserRole role;
 
     public String getGuid() {
         return guid;
+    }
+
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
     public String getFirstName() {
@@ -129,6 +136,7 @@ public class User implements Serializable {
                 ", dob=" + dob +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 '}';
@@ -149,4 +157,13 @@ public class User implements Serializable {
     public void setRole(UserRole role) {
         this.role = role;
     }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
 }
