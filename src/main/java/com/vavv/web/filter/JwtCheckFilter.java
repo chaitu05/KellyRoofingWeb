@@ -51,17 +51,17 @@ public class JwtCheckFilter implements Filter {
 
                 User userFromRepo = userRepository.findFirstByGuid(userFromJwt.getGuid());
                 if (userFromRepo == null || !StringUtils.hasText(userFromRepo.getUsername()))
-                    writeErrorResponse(servletResponse, "Bad user"); // User does not exist in database.
+                    writeErrorResponse(servletResponse, "Bad user..."); // User does not exist in database.
                 else {
 
                     if (userFromJwt.getRole().equals(UserRole.SUPER_ADMIN) || userFromJwt.getRole().equals(UserRole.GROUP_ADMIN)) {
                         servletRequest.setAttribute(Utilz.JWT_USER_PROP, userFromJwt);
                         filterChain.doFilter(servletRequest, servletResponse);
-                    } else if (requestedUri.contains("addOrder")) {
-                        writeErrorResponse(servletResponse, "Bad Request");
-                    } else {
+                    } else if (requestedUri.contains(Utilz.UPDATE_PICK_DELIVERY_DATE) || requestedUri.contains(Utilz.GET_ORDERS)) {
                         servletRequest.setAttribute(Utilz.JWT_USER_PROP, userFromJwt);
                         filterChain.doFilter(servletRequest, servletResponse);
+                    } else {
+                        writeErrorResponse(servletResponse, "Bad Request");
                     }
 
                 }

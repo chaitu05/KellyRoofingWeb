@@ -43,9 +43,6 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "salt")
-    private String salt;
-
     @Column(name = "email")
     private String email;
 
@@ -136,7 +133,6 @@ public class User implements Serializable {
                 ", dob=" + dob +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 '}';
@@ -156,14 +152,6 @@ public class User implements Serializable {
 
     public void setRole(UserRole role) {
         this.role = role;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
 }

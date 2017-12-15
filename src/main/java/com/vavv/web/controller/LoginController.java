@@ -6,6 +6,7 @@ import com.vavv.web.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -115,5 +116,13 @@ public class LoginController {
             public final long l = 333l;
             public final double d = 3.3d;
         }, headers, HttpStatus.OK);
+    }
+
+    private String hashPassword(String pass) {
+        return BCrypt.hashpw(pass, BCrypt.gensalt(12));
+    }
+
+    private boolean checkPassword(String pass, String hashedPass) {
+        return BCrypt.checkpw(pass, hashedPass);
     }
 }

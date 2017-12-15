@@ -9,4 +9,9 @@ mysql ignores case
 select * from table where name='john' and select * from table where name = 'JoHn'
 work similarly as mySql is case insenstive by default.
 
+### Advanced rest client
+Sending a get request to get orders
+
+http://localhost:8080/order/getOrders?from=12/12/2017&to=12/18/2017&id=idididididid
+
 

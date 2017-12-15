@@ -24,6 +24,12 @@ public final class Utilz implements Serializable {
 
     public static final String KR_AUTHORIZATION_HEADER = "Kr-Authorization";
 
+    public static final String UPDATE_PICK_DELIVERY_DATE = "/updatePickDeliverDate";
+    public static final String ADD_ORDER = "/addOrder";
+    public static final String UPDATE_ORDER = "/updateOrder";
+    public static final String GET_ALL_ORDERS = "/getAllOrders";
+    public static final String GET_ORDERS = "/getOrders";
+
     public static final Map<Integer, String> CRON_JOB_PARAM_TYPE_VALS_MAP = new HashMap<Integer, String>() {
         private static final long serialVersionUID = 1L;
 
