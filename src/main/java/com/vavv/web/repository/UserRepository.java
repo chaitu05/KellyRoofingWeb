@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "select * from User user where BINARY user.username = :username and BINARY user.password = :password", nativeQuery = true)
     List<User> queryByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
     List<User> getUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+    User findFirstByGuid(String guid);
 }
