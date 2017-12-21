@@ -1,9 +1,9 @@
 package com.vavv.web.controller;
 
 import com.vavv.web.Utilz;
-import com.vavv.web.model.Order;
-import com.vavv.web.model.User;
+import com.vavv.web.model.*;
 import com.vavv.web.repository.OrderRepository;
+import com.vavv.web.repository.OrderTempRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +18,11 @@ import java.util.List;
 public class OrderController {
 
     private final OrderRepository orderRepository;
+    private final OrderTempRepository otr;
 
-    public OrderController(OrderRepository or) {
+    public OrderController(OrderRepository or, OrderTempRepository otr) {
         this.orderRepository = or;
+        this.otr = otr;
     }
 
     @RequestMapping("/hello")
@@ -33,19 +35,33 @@ public class OrderController {
     @RequestMapping(value = Utilz.ADD_ORDER, method = RequestMethod.POST)
     public ResponseEntity<Order> addOrder(@RequestBody Order order) {
         System.out.println("Add order: " + order);
-        return new ResponseEntity(new Order("addOrder"), HttpStatus.OK);
+
+        OrderTemp ot = new OrderTemp(1234, 44443,
+                "RED",MaterialType.insulation, OrderType.Delivery, new Date(),
+                new Date(), "salt lake", false, "Notes",
+                "36ce3c3e-cc25-11e7-acdc-96395d26a8d8");
+        OrderTemp otSaved = otr.saveAndFlush(ot);
+
+        System.out.println("Saved ot: " + otSaved);
+        /*order = new Order(12344, 987777, "RED", MaterialType.insulation,
+                OrderType.Delivery, new Date(), new Date(), "New York", true,
+                false, null, "notes", "36ce3c3e-cc25-11e7-acdc-96395d26a8d8");
+        Order so = orderRepository.saveAndFlush(order);
+        System.out.println("saved o: " + so);*/
+
+        return new ResponseEntity(new Order(), HttpStatus.OK);
     }
 
     @RequestMapping(value = Utilz.UPDATE_ORDER, method = RequestMethod.POST)
     public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
         System.out.println("Update order: " + order);
-        return new ResponseEntity(new Order("updatedOrder"), HttpStatus.OK);
+        return new ResponseEntity(new Order(), HttpStatus.OK);
     }
 
     @RequestMapping(value = Utilz.UPDATE_PICK_DELIVERY_DATE, method = RequestMethod.POST)
     public ResponseEntity<Order> updatePickDeliverDate(@RequestBody Order order) {
         System.out.println("Update pickDelivery date of order: " + order);
-        return new ResponseEntity(new Order("Update pickDelivery date"), HttpStatus.OK);
+        return new ResponseEntity(new Order(), HttpStatus.OK);
     }
 
     @RequestMapping(value = Utilz.GET_ORDERS, method = RequestMethod.GET)
@@ -54,15 +70,15 @@ public class OrderController {
                                                  @RequestParam(value = "id") String id) {
         System.out.println("From : " + from + "\tTo: " + to + "\tID: " + id);
         List<Order> orders = new ArrayList<>();
-        orders.add(new Order("a"));
-        orders.add(new Order("b"));
-        orders.add(new Order("c"));
-        orders.add(new Order("d"));
-        orders.add(new Order("e"));
-        orders.add(new Order("f"));
-        orders.add(new Order("g"));
-        orders.add(new Order("h"));
-        orders.add(new Order("i"));
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
         return new ResponseEntity(orders, HttpStatus.OK);
     }
 
@@ -71,15 +87,15 @@ public class OrderController {
                                                  @RequestParam(value = "to") Date to ) {
         System.out.println("From : " + from + "\tTo: " + to);
         List<Order> orders = new ArrayList<>();
-        orders.add(new Order("z"));
-        orders.add(new Order("y"));
-        orders.add(new Order("x"));
-        orders.add(new Order("w"));
-        orders.add(new Order("e"));
-        orders.add(new Order("f"));
-        orders.add(new Order("g"));
-        orders.add(new Order("h"));
-        orders.add(new Order("i"));
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
+        orders.add(new Order());
         return new ResponseEntity(orders, HttpStatus.OK);
     }
 

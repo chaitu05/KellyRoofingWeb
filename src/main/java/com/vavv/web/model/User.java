@@ -25,19 +25,19 @@ public class User implements Serializable {
     @Column(name = "guid", unique = true)
     private String guid;
 
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "licenseNum")
+    @Column(name = "license_num")
     private String licenseNum;
 
     @Column(name = "dob")
     private Date dob;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")
