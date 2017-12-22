@@ -3,7 +3,6 @@ package com.vavv.web.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -11,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "Order")
-@Table(name = "order")
+@Table(name = "orders")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;

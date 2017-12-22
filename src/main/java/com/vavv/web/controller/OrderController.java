@@ -1,7 +1,10 @@
 package com.vavv.web.controller;
 
 import com.vavv.web.Utilz;
-import com.vavv.web.model.*;
+import com.vavv.web.model.MaterialType;
+import com.vavv.web.model.Order;
+import com.vavv.web.model.OrderType;
+import com.vavv.web.model.User;
 import com.vavv.web.repository.OrderRepository;
 import com.vavv.web.repository.OrderTempRepository;
 import org.springframework.http.HttpHeaders;
@@ -36,18 +39,19 @@ public class OrderController {
     public ResponseEntity<Order> addOrder(@RequestBody Order order) {
         System.out.println("Add order: " + order);
 
-        OrderTemp ot = new OrderTemp(1234, 44443,
-                "RED",MaterialType.insulation, OrderType.Delivery, new Date(),
+        /*OrderTemp ot = new OrderTemp(1234, 44443,
+                "RED", MaterialType.insulation, OrderType.Delivery, new Date(),
                 new Date(), "salt lake", false, "Notes",
                 "36ce3c3e-cc25-11e7-acdc-96395d26a8d8");
         OrderTemp otSaved = otr.saveAndFlush(ot);
 
-        System.out.println("Saved ot: " + otSaved);
-        /*order = new Order(12344, 987777, "RED", MaterialType.insulation,
-                OrderType.Delivery, new Date(), new Date(), "New York", true,
-                false, null, "notes", "36ce3c3e-cc25-11e7-acdc-96395d26a8d8");
+        System.out.println("Saved ot: " + otSaved);*/
+        order = new Order(12344, 987777, "RED",
+                MaterialType.insulation, OrderType.Delivery, new Date(), new Date(),
+                "New York", true, false, null,
+                "notes", "36ce3c3e-cc25-11e7-acdc-96395d26a8d8");
         Order so = orderRepository.saveAndFlush(order);
-        System.out.println("saved o: " + so);*/
+        System.out.println("saved o: " + so);
 
         return new ResponseEntity(new Order(), HttpStatus.OK);
     }
@@ -84,7 +88,7 @@ public class OrderController {
 
     @RequestMapping(value = Utilz.GET_ALL_ORDERS, method = RequestMethod.GET)
     public ResponseEntity<List<Order>> getAllOrders(@RequestParam(value = "from") Date from,
-                                                 @RequestParam(value = "to") Date to ) {
+                                                    @RequestParam(value = "to") Date to) {
         System.out.println("From : " + from + "\tTo: " + to);
         List<Order> orders = new ArrayList<>();
         orders.add(new Order());
