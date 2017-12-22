@@ -18,7 +18,7 @@ CREATE TABLE
 
 
 CREATE TABLE
-  ORDER
+  orders
 (
   guid                   CHAR(40)         NOT NULL,
   purchase_order_number  INT              NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE
   material_type          VARCHAR(12)      NOT NULL,
   order_type             VARCHAR(10)      NOT NULL,
   order_date             DATETIME         NOT NULL,
-  pickup_date            DATETIME         NOT NULL,
+  pickup_or_deliver_date DATETIME         NOT NULL,
   city                   VARCHAR(30)      NOT NULL,
   order_placed           BIT DEFAULT b'1' NOT NULL,
   is_picked_or_delivered BIT DEFAULT b'0' NOT NULL,
@@ -62,3 +62,39 @@ INSERT INTO user (guid, firstName, lastName, licenseNum, dob, username, password
 VALUES ('36ce3c3e-cc25-11e7-acdc-96395d26a8d8', 'Lebron', 'James', 9487026, '1976-10-15', 'ljames', 'ljames');
 INSERT INTO user (guid, firstName, lastName, licenseNum, dob, username, password)
 VALUES ('77888298-cc25-11e7-acdc-96395d26a8d8', 'Trisha', 'Yearwood', 111111, '1976-10-20', 'tyearwood', 'yearwood');
+
+# Dummy data in to orders table
+INSERT
+INTO
+  test.orders
+  (
+    order.guid,
+    order.purchase_order_number,
+    order.job_name,
+    order.material_type,
+    order.order_type,
+    order.order_date,
+    order.pickup_date,
+    order.city,
+    order.order_placed,
+    order.is_picked_or_delivered,
+    order.note,
+    order.user_id,
+    order.sales_order_number
+  )
+VALUES
+  (
+    uuid(),
+    (ROUND(RAND() * 400000-3000) + 3000), -- ROUND((RAND() * (max-min))+min)
+    ELT(0.5 + RAND() * 2, 'SUPERIOR', 'RED'),
+    ELT(0.5 + RAND() * 4, 'insulation','metal','membrane','skylites'),
+    ELT(0.5 + RAND() * 2, 'Delivery','Pickup'),
+    DATE_ADD(utc_timestamp(), INTERVAL -6*rand() DAY),
+    DATE_ADD(utc_timestamp(), INTERVAL 4*rand() DAY),
+    ELT(0.5 + RAND() * 6, 'North Dakota','Montana','Denver','Salt Lake City', 'Los Angeles', 'San Francisco'),
+    b'1',
+    b'0',
+    ELT(0.5 + RAND() * 2, 'Knowledge is power.',''),
+    ELT(0.5 + RAND() * 3, '10645c4a-cc25-11e7-acdc-96395d26a8d8','36ce3c3e-cc25-11e7-acdc-96395d26a8d8', '77888298-cc25-11e7-acdc-96395d26a8d8'),
+    (ROUND(RAND() * 6000000-3000) + 3000) -- ROUND((RAND() * (max-min))+min)
+  );

@@ -6,7 +6,6 @@ import com.vavv.web.model.Order;
 import com.vavv.web.model.OrderType;
 import com.vavv.web.model.User;
 import com.vavv.web.repository.OrderRepository;
-import com.vavv.web.repository.OrderTempRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +20,9 @@ import java.util.List;
 public class OrderController {
 
     private final OrderRepository orderRepository;
-    private final OrderTempRepository otr;
 
-    public OrderController(OrderRepository or, OrderTempRepository otr) {
+    public OrderController(OrderRepository or) {
         this.orderRepository = or;
-        this.otr = otr;
     }
 
     @RequestMapping("/hello")
@@ -37,15 +34,8 @@ public class OrderController {
 
     @RequestMapping(value = Utilz.ADD_ORDER, method = RequestMethod.POST)
     public ResponseEntity<Order> addOrder(@RequestBody Order order) {
+
         System.out.println("Add order: " + order);
-
-        /*OrderTemp ot = new OrderTemp(1234, 44443,
-                "RED", MaterialType.insulation, OrderType.Delivery, new Date(),
-                new Date(), "salt lake", false, "Notes",
-                "36ce3c3e-cc25-11e7-acdc-96395d26a8d8");
-        OrderTemp otSaved = otr.saveAndFlush(ot);
-
-        System.out.println("Saved ot: " + otSaved);*/
         order = new Order(12344, 987777, "RED",
                 MaterialType.insulation, OrderType.Delivery, new Date(), new Date(),
                 "New York", true, false, null,
