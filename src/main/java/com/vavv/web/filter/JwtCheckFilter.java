@@ -23,7 +23,8 @@ public class JwtCheckFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
 
         System.out.println("JwtCheckFilter happening..!!!: " + jwtEncryptSecret);
         String requestedUri = ((HttpServletRequest) servletRequest).getRequestURI();
@@ -54,12 +55,18 @@ public class JwtCheckFilter implements Filter {
                     writeErrorResponse(servletResponse, "Bad user..."); // User does not exist in database.
                 else {
 
-                    if (userFromJwt.getRole().equals(UserRole.SUPER_ADMIN) || userFromJwt.getRole().equals(UserRole.GROUP_ADMIN)) {
+                    if (userFromJwt.getRole().equals(UserRole.SUPER_ADMIN)
+                            || userFromJwt.getRole().equals(UserRole.GROUP_ADMIN)) {
+
                         servletRequest.setAttribute(Utilz.JWT_USER_PROP, userFromJwt);
                         filterChain.doFilter(servletRequest, servletResponse);
-                    } else if (requestedUri.contains(Utilz.UPDATE_PICK_DELIVERY_DATE) || requestedUri.contains(Utilz.GET_ORDERS)) {
+
+                    } else if (requestedUri.contains(Utilz.UPDATE_PICK_DELIVERY_DATE)
+                            || requestedUri.contains(Utilz.GET_ORDERS)) {
+
                         servletRequest.setAttribute(Utilz.JWT_USER_PROP, userFromJwt);
                         filterChain.doFilter(servletRequest, servletResponse);
+
                     } else {
                         writeErrorResponse(servletResponse, "Bad Request");
                     }

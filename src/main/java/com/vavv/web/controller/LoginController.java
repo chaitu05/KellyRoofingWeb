@@ -37,6 +37,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
+//    @CrossOrigin
     public ResponseEntity login(@RequestBody User user) {
 
         System.out.println("User submitted account: " + user);
@@ -79,7 +80,7 @@ public class LoginController {
 
         Map<String, Object> map = new HashMap<>();
         map.put(Utilz.JWT_USER_ROLE_PROP, user.getRole().toString());
-        map.put(Utilz.JWT_USER_GUID_PROP, user.getGuid().toString());
+        map.put(Utilz.JWT_USER_GUID_PROP, user.getGuid());
         claims.put(Utilz.JWT_USER_PROP, map);
 
         claims.setSubject(Utilz.JWT_SUB);

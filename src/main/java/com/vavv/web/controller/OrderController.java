@@ -6,6 +6,7 @@ import com.vavv.web.model.Order;
 import com.vavv.web.model.OrderType;
 import com.vavv.web.model.User;
 import com.vavv.web.repository.OrderRepository;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,7 @@ public class OrderController {
         System.out.println("Add order: " + order);
         order = new Order(12344, 987777, "RED",
                 MaterialType.insulation, OrderType.Delivery, new Date(), new Date(),
-                "New York", true, false, null,
+                "Newark", true, false, null,
                 "notes", "36ce3c3e-cc25-11e7-acdc-96395d26a8d8");
         Order so = orderRepository.saveAndFlush(order);
         System.out.println("saved o: " + so);
@@ -77,8 +78,8 @@ public class OrderController {
     }
 
     @RequestMapping(value = Utilz.GET_ALL_ORDERS, method = RequestMethod.GET)
-    public ResponseEntity<List<Order>> getAllOrders(@RequestParam(value = "from") Date from,
-                                                    @RequestParam(value = "to") Date to) {
+    public ResponseEntity<List<Order>> getAllOrders(@RequestParam(value = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date from,
+                                                    @RequestParam(value = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date to) {
         System.out.println("From : " + from + "\tTo: " + to);
         List<Order> orders = new ArrayList<>();
         orders.add(new Order());

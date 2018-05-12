@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, String> {
+
     /*List<User> findByUsernameEquals(String username);
     User findFirstByUsernameEquals(String username);
     List<User> findTop5ByUsernameEquals(String username);
@@ -17,6 +19,10 @@ public interface OrderRepository extends JpaRepository<Order, String> {
     List<User> queryByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
     List<User> getUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
     User findFirstByGuid(String guid);*/
+
+    Order findFirstByGuidAndUserId(String guid, String userId);
+
+    List<Order> findByOrderDateBetween(Date starDate, Date endDate);
 
     @Override
     Order saveAndFlush(Order o);
