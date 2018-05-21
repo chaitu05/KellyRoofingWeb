@@ -22,7 +22,7 @@ public final class Utilz implements Serializable {
 
     public static final String BAD_CREDENTIALS = "Bad username or password";
 
-    public static final String KR_AUTHORIZATION_HEADER = "Kr-Authorization";
+    public static final String KR_AUTHORIZATION_HEADER = "authorization";
 
     public static final String UPDATE_PICK_DELIVERY_DATE = "/updatePickDeliverDate";
     public static final String ADD_ORDER = "/addOrder";
@@ -39,7 +39,7 @@ public final class Utilz implements Serializable {
     };
 
     public static User parseJwt(String jwt, String secret) throws Exception {
-        
+
         System.out.println("parsing jwt");
 
         Jws<Claims> claims = Jwts.parser()
@@ -53,11 +53,11 @@ public final class Utilz implements Serializable {
         System.out.println("claims header: " + claims.getHeader());
         System.out.println("claims userData: " + claims.getBody().get(Utilz.JWT_USER_PROP));
 
-        Map dataMap = (Map)claims.getBody().get(Utilz.JWT_USER_PROP);
+        Map dataMap = (Map) claims.getBody().get(Utilz.JWT_USER_PROP);
         System.out.println("map: " + dataMap);
 
         User user = new User();
-        user.setGuid(dataMap.get(JWT_USER_GUID_PROP).toString() );
+        user.setGuid(dataMap.get(JWT_USER_GUID_PROP).toString());
         user.setRole(UserRole.valueOf(dataMap.get(JWT_USER_ROLE_PROP).toString()));
         System.out.println(user);
 

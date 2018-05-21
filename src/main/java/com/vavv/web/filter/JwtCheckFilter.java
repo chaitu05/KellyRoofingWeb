@@ -10,6 +10,10 @@ import org.springframework.util.StringUtils;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Map;
 
 public class JwtCheckFilter implements Filter {
 
@@ -19,16 +23,30 @@ public class JwtCheckFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        System.out.println("\n\n$$$$$$$$$ JWT Filter Initialization\n\n");
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
 
-        System.out.println("JwtCheckFilter happening..!!!: " + jwtEncryptSecret);
-        String requestedUri = ((HttpServletRequest) servletRequest).getRequestURI();
-        String authHeaderVal = ((HttpServletRequest) servletRequest).getHeader(Utilz.KR_AUTHORIZATION_HEADER);
+        System.out.println("\n\n\nJwtCheckFilter happening..!!!: " + jwtEncryptSecret);
+        HttpServletRequest hsr = (HttpServletRequest)servletRequest;
+
+        String requestedUri = hsr.getRequestURI();
+        String authHeaderVal = hsr.getHeader(Utilz.KR_AUTHORIZATION_HEADER);
+
+        System.out.println("requested uri: " + requestedUri + "\nauthHeaderVal: " + authHeaderVal + "\n");
+
+        /*ArrayList<String> headNames = Collections.list(hsr.getHeaderNames());
+        for (String hn : headNames) {
+            System.out.println("Header: " + hn + " = " + hsr.getHeader(hn));
+        }
+
+        System.out.println("\n");*/
+        for (Map.Entry<String, String[]> entry : hsr.getParameterMap().entrySet()) {
+            System.out.println("Parameter: " + entry + " = " + entry.getValue().toString());
+        }
 
         if (requestedUri.equalsIgnoreCase("/login/signin"))
             filterChain.doFilter(servletRequest, servletResponse);
@@ -51,6 +69,9 @@ public class JwtCheckFilter implements Filter {
             if (jwtParsed) { // JWT parsed without errors
 
                 User userFromRepo = userRepository.findFirstByGuid(userFromJwt.getGuid());
+
+                System.out.println("\n\nUser from repo: " + userFromRepo);
+
                 if (userFromRepo == null || !StringUtils.hasText(userFromRepo.getUsername()))
                     writeErrorResponse(servletResponse, "Bad user..."); // User does not exist in database.
                 else {
@@ -58,12 +79,14 @@ public class JwtCheckFilter implements Filter {
                     if (userFromJwt.getRole().equals(UserRole.SUPER_ADMIN)
                             || userFromJwt.getRole().equals(UserRole.GROUP_ADMIN)) {
 
+                        System.out.println("\n Super admin user");
                         servletRequest.setAttribute(Utilz.JWT_USER_PROP, userFromJwt);
                         filterChain.doFilter(servletRequest, servletResponse);
 
                     } else if (requestedUri.contains(Utilz.UPDATE_PICK_DELIVERY_DATE)
                             || requestedUri.contains(Utilz.GET_ORDERS)) {
 
+                        System.out.println("\n update date or getOrders");
                         servletRequest.setAttribute(Utilz.JWT_USER_PROP, userFromJwt);
                         filterChain.doFilter(servletRequest, servletResponse);
 

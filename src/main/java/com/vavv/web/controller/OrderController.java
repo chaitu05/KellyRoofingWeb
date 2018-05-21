@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/order")
 public class OrderController {
 
@@ -59,7 +60,8 @@ public class OrderController {
         return new ResponseEntity(new Order(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = Utilz.GET_ORDERS, method = RequestMethod.GET)
+    @RequestMapping(value = "/getOrders", method = RequestMethod.GET)
+//    @CrossOrigin
     public ResponseEntity<List<Order>> getOrders(@RequestParam(value = "from") Date from,
                                                  @RequestParam(value = "to") Date to,
                                                  @RequestParam(value = "id") String id) {

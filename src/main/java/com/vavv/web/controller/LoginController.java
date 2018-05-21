@@ -30,6 +30,7 @@ public class LoginController {
     }
 
     @RequestMapping("/hello")
+//    @CrossOrigin
     public String sayHello() {
 
         System.out.println("in say ");
