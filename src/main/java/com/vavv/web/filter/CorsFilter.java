@@ -20,6 +20,7 @@ public class CorsFilter implements Filter {
         HttpServletRequest hsReq = (HttpServletRequest)servletRequest;
         HttpServletResponse hsRes = (HttpServletResponse) servletResponse;
 
+        // TODO: get allowed origins from the properties file.
         hsRes.setHeader("Access-Control-Allow-Origin", hsReq.getHeader("Origin"));
 
         filterChain.doFilter(hsReq, hsRes);

@@ -38,6 +38,9 @@ public class Order implements Serializable {
     @Column(name = "material_type", nullable = false)
     private MaterialType materialType;
 
+    @Column(name = "product_type")
+    private String productType;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "order_type", nullable = false)
     private OrderType orderType;
@@ -139,6 +142,14 @@ public class Order implements Serializable {
         this.materialType = materialType;
     }
 
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
     public OrderType getOrderType() {
         return orderType;
     }
@@ -234,6 +245,7 @@ public class Order implements Serializable {
                 ", salesOrderNumber=" + salesOrderNumber +
                 ", jobName='" + jobName + '\'' +
                 ", materialType=" + materialType +
+                ", productType=" + productType +
                 ", orderType=" + orderType +
                 ", orderDate=" + orderDate +
                 ", pickupOrDeliverDate=" + pickupOrDeliverDate +
@@ -245,4 +257,5 @@ public class Order implements Serializable {
                 ", userId='" + userId + '\'' +
                 '}';
     }
+
 }

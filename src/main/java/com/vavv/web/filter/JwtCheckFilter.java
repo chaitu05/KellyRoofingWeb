@@ -31,12 +31,13 @@ public class JwtCheckFilter implements Filter {
             throws IOException, ServletException {
 
         System.out.println("\n\n\nJwtCheckFilter happening..!!!: " + jwtEncryptSecret);
-        HttpServletRequest hsr = (HttpServletRequest)servletRequest;
+        HttpServletRequest hsr = (HttpServletRequest) servletRequest;
 
         String requestedUri = hsr.getRequestURI();
         String authHeaderVal = hsr.getHeader(Utilz.KR_AUTHORIZATION_HEADER);
 
-        System.out.println("requested uri: " + requestedUri + "\nauthHeaderVal: " + authHeaderVal + "\n");
+        System.out.println("requested uri: " + requestedUri
+                + "\nauthHeaderVal: " + authHeaderVal + "\n");
 
         /*ArrayList<String> headNames = Collections.list(hsr.getHeaderNames());
         for (String hn : headNames) {
@@ -44,9 +45,12 @@ public class JwtCheckFilter implements Filter {
         }
 
         System.out.println("\n");*/
-        for (Map.Entry<String, String[]> entry : hsr.getParameterMap().entrySet()) {
+
+        /*System.out.println("\nhsr.getParameterMap(): " + hsr.getParameterMap()
+            + "\nSize: " + hsr.getParameterMap().size());*/
+
+        for (Map.Entry<String, String[]> entry : hsr.getParameterMap().entrySet())
             System.out.println("Parameter: " + entry + " = " + entry.getValue().toString());
-        }
 
         if (requestedUri.equalsIgnoreCase("/login/signin"))
             filterChain.doFilter(servletRequest, servletResponse);
