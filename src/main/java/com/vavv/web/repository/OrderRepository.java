@@ -24,6 +24,9 @@ public interface OrderRepository extends JpaRepository<Order, String> {
 
     List<Order> findByOrderDateBetween(Date starDate, Date endDate);
 
+    @Query("select o from Order o where o.pickupOrDeliverDate between ?1 and ?2")
+    List<Order> findByPickupOrDeliverDateBetween(Date starDate, Date endDate);
+
     @Override
     Order saveAndFlush(Order o);
 }

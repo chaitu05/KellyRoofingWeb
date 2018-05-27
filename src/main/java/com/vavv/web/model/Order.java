@@ -22,14 +22,14 @@ public class Order implements Serializable {
     private String guid;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_fk")
+    @JoinColumn(name = "order_id")
     private Set<OrderConfirmation> orderConfirmations = new HashSet<>();
 
     @Column(name = "purchase_order_number", nullable = false)
     private long purchaseOrderNumber;
 
     @Column(name = "sales_order_number", nullable = false)
-    private long salesOrderNumber;
+    private long salesOrderNum;
 
     @Column(name = "job_name", nullable = false)
     private String jobName;
@@ -75,12 +75,12 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(long purchaseOrderNumber, long salesOrderNumber, String jobName, MaterialType materialType,
+    public Order(long purchaseOrderNumber, long salesOrderNum, String jobName, MaterialType materialType,
                  OrderType orderType, Date orderDate, Date pickupOrDeliverDate, String city,
                  boolean orderPlaced, boolean isPickedOrDelivered, Date completedDate, String note,
                  String userId) {
         this.purchaseOrderNumber = purchaseOrderNumber;
-        this.salesOrderNumber = salesOrderNumber;
+        this.salesOrderNum = salesOrderNum;
         this.jobName = jobName;
         this.materialType = materialType;
         this.orderType = orderType;
@@ -118,12 +118,12 @@ public class Order implements Serializable {
         this.purchaseOrderNumber = purchaseOrderNumber;
     }
 
-    public long getSalesOrderNumber() {
-        return salesOrderNumber;
+    public long getSalesOrderNum() {
+        return salesOrderNum;
     }
 
-    public void setSalesOrderNumber(long salesOrderNumber) {
-        this.salesOrderNumber = salesOrderNumber;
+    public void setSalesOrderNum(long salesOrderNum) {
+        this.salesOrderNum = salesOrderNum;
     }
 
     public String getJobName() {
@@ -242,7 +242,7 @@ public class Order implements Serializable {
                 "guid='" + guid + '\'' +
                 ", orderConfirmations=" + orderConfirmations +
                 ", purchaseOrderNumber=" + purchaseOrderNumber +
-                ", salesOrderNumber=" + salesOrderNumber +
+                ", salesOrderNum=" + salesOrderNum +
                 ", jobName='" + jobName + '\'' +
                 ", materialType=" + materialType +
                 ", productType=" + productType +

@@ -28,6 +28,7 @@ public final class Utilz implements Serializable {
     public static final String ADD_ORDER = "/addOrder";
     public static final String UPDATE_ORDER = "/updateOrder";
     public static final String GET_ALL_ORDERS = "/getAllOrders";
+    public static final String GET_ALL_ORDERS_DATE_RANGE = "/getAllOrdersDateRange";
     public static final String GET_ORDERS = "/getOrders";
 
     public static final Map<Integer, String> CRON_JOB_PARAM_TYPE_VALS_MAP = new HashMap<Integer, String>() {
@@ -46,12 +47,12 @@ public final class Utilz implements Serializable {
                 .setSigningKey(secret)
                 .parseClaimsJws(jwt);
 
-        System.out.println("claims: " + claims);
+        /*System.out.println("claims: " + claims);
         System.out.println("claims signature: " + claims.getSignature());
         System.out.println("claims body: " + claims.getBody());
         System.out.println("claims body sub: " + claims.getBody().getSubject());
         System.out.println("claims header: " + claims.getHeader());
-        System.out.println("claims userData: " + claims.getBody().get(Utilz.JWT_USER_PROP));
+        System.out.println("claims userData: " + claims.getBody().get(Utilz.JWT_USER_PROP));*/
 
         Map dataMap = (Map) claims.getBody().get(Utilz.JWT_USER_PROP);
         System.out.println("map: " + dataMap);

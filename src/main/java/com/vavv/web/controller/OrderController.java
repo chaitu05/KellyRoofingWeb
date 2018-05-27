@@ -12,12 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/order")
 public class OrderController {
 
@@ -61,11 +61,11 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/getOrders", method = RequestMethod.GET)
-//    @CrossOrigin
     public ResponseEntity<List<Order>> getOrders(@RequestParam(value = "from") Date from,
-                                                 @RequestParam(value = "to") Date to,
-                                                 @RequestParam(value = "id") String id) {
-        System.out.println("From : " + from + "\tTo: " + to + "\tID: " + id);
+                                                 @RequestParam(value = "to") Date to) {
+
+        System.out.println("From : " + from + "\tTo: " + to);
+//        List<Order> orders = orderRepository.findByOrderDateBetween(from, to);
         List<Order> orders = new ArrayList<>();
         orders.add(new Order());
         orders.add(new Order());
@@ -80,19 +80,26 @@ public class OrderController {
     }
 
     @RequestMapping(value = Utilz.GET_ALL_ORDERS, method = RequestMethod.GET)
-    public ResponseEntity<List<Order>> getAllOrders(@RequestParam(value = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date from,
-                                                    @RequestParam(value = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date to) {
+    public ResponseEntity<List<Order>> getAllOrders() {
+
+        LocalDate toDate = LocalDate.now().plusDays(25);
+        LocalDate fromDate = LocalDate.now().minusDays(10);
+
+        return this.getAllOrdersDateRange(java.sql.Date.valueOf(fromDate), java.sql.Date.valueOf(toDate));
+
+
+    }
+
+    @RequestMapping(value = Utilz.GET_ALL_ORDERS_DATE_RANGE, method = RequestMethod.GET)
+    public ResponseEntity<List<Order>> getAllOrdersDateRange(
+            @RequestParam(value = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date from,
+            @RequestParam(value = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date to) {
+
         System.out.println("From : " + from + "\tTo: " + to);
-        List<Order> orders = new ArrayList<>();
-        orders.add(new Order());
-        orders.add(new Order());
-        orders.add(new Order());
-        orders.add(new Order());
-        orders.add(new Order());
-        orders.add(new Order());
-        orders.add(new Order());
-        orders.add(new Order());
-        orders.add(new Order());
+
+        List<Order> orders = orderRepository.findByPickupOrDeliverDateBetween(from, to);
+        System.out.println("\n#Orders: " + orders.size() + "\n");
+
         return new ResponseEntity(orders, HttpStatus.OK);
     }
 
