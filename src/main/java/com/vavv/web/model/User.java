@@ -19,6 +19,12 @@ public class User implements Serializable {
     public User() {
     }
 
+    public User(String guid, String firstName, String lastName) {
+        this.guid = guid;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -45,6 +51,9 @@ public class User implements Serializable {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean active;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
@@ -106,6 +115,15 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -134,6 +152,7 @@ public class User implements Serializable {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", active='" + active + '\'' +
                 ", role='" + role + '\'' +
                 '}';
     }

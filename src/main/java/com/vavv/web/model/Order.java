@@ -26,7 +26,7 @@ public class Order implements Serializable {
     private Set<OrderConfirmation> orderConfirmations = new HashSet<>();
 
     @Column(name = "purchase_order_number", nullable = false)
-    private long purchaseOrderNumber;
+    private long purchOrderNum;
 
     @Column(name = "sales_order_number", nullable = false)
     private long salesOrderNum;
@@ -75,11 +75,11 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(long purchaseOrderNumber, long salesOrderNum, String jobName, MaterialType materialType,
+    public Order(long purchOrderNum, long salesOrderNum, String jobName, MaterialType materialType,
                  OrderType orderType, Date orderDate, Date pickupOrDeliverDate, String city,
                  boolean orderPlaced, boolean isPickedOrDelivered, Date completedDate, String note,
                  String userId) {
-        this.purchaseOrderNumber = purchaseOrderNumber;
+        this.purchOrderNum = purchOrderNum;
         this.salesOrderNum = salesOrderNum;
         this.jobName = jobName;
         this.materialType = materialType;
@@ -110,12 +110,12 @@ public class Order implements Serializable {
         this.orderConfirmations = orderConfirmations;
     }
 
-    public long getPurchaseOrderNumber() {
-        return purchaseOrderNumber;
+    public long getPurchOrderNum() {
+        return purchOrderNum;
     }
 
-    public void setPurchaseOrderNumber(long purchaseOrderNumber) {
-        this.purchaseOrderNumber = purchaseOrderNumber;
+    public void setPurchOrderNum(long purchOrderNum) {
+        this.purchOrderNum = purchOrderNum;
     }
 
     public long getSalesOrderNum() {
@@ -241,7 +241,7 @@ public class Order implements Serializable {
         return "Order{" +
                 "guid='" + guid + '\'' +
                 ", orderConfirmations=" + orderConfirmations +
-                ", purchaseOrderNumber=" + purchaseOrderNumber +
+                ", purchOrderNum=" + purchOrderNum +
                 ", salesOrderNum=" + salesOrderNum +
                 ", jobName='" + jobName + '\'' +
                 ", materialType=" + materialType +

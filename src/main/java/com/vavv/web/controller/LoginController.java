@@ -30,7 +30,6 @@ public class LoginController {
     }
 
     @RequestMapping("/hello")
-//    @CrossOrigin
     public String sayHello() {
 
         System.out.println("in say ");
@@ -38,7 +37,6 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
-//    @CrossOrigin
     public ResponseEntity login(@RequestBody User user) {
 
         System.out.println("User submitted account: " + user);
@@ -61,8 +59,6 @@ public class LoginController {
 
         // create JWT token with role, userId
         User foundUser = users.get(0);
-//        foundUser.setGuid(UUID.randomUUID().toString());
-//        foundUser.setRole(UserRole.SUPER_ADMIN);
         String jwt = createJWT(foundUser);
 
         // create ResponseEntity with success to true and JWT token.
@@ -72,6 +68,15 @@ public class LoginController {
             public final boolean success = true;
             public final String tok = jwt;
         }, headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
+    public ResponseEntity getAllUsers() {
+
+        List<User> users = userRepository.findAllActiveUsers();
+        System.out.println("\n#Users: " + users.size() + "\n");
+
+        return new ResponseEntity(users, HttpStatus.OK);
     }
 
 
