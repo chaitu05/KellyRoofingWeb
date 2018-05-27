@@ -56,6 +56,9 @@ public class Order implements Serializable {
     @Column(name = "city", nullable = false)
     private String city;
 
+    @Column(name = "addr_state")
+    private String addrState;
+
     @Column(name = "order_placed", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean orderPlaced;
 
@@ -71,6 +74,9 @@ public class Order implements Serializable {
 
     @Column(name = "user_id", nullable = false)
     private String userId;
+
+    @Column(name = "address_line")
+    private String addressLine;
 
     public Order() {
     }
@@ -236,6 +242,22 @@ public class Order implements Serializable {
         return Objects.hash(guid);
     }
 
+    public String getAddressLine() {
+        return addressLine;
+    }
+
+    public void setAddressLine(String addressLine) {
+        this.addressLine = addressLine;
+    }
+
+    public String getAddrState() {
+        return addrState;
+    }
+
+    public void setAddrState(String addrState) {
+        this.addrState = addrState;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -245,17 +267,18 @@ public class Order implements Serializable {
                 ", salesOrderNum=" + salesOrderNum +
                 ", jobName='" + jobName + '\'' +
                 ", materialType=" + materialType +
-                ", productType=" + productType +
+                ", productType='" + productType + '\'' +
                 ", orderType=" + orderType +
                 ", orderDate=" + orderDate +
                 ", pickupOrDeliverDate=" + pickupOrDeliverDate +
                 ", city='" + city + '\'' +
+                ", addrState='" + addrState + '\'' +
                 ", orderPlaced=" + orderPlaced +
                 ", isPickedOrDelivered=" + isPickedOrDelivered +
                 ", completedDate=" + completedDate +
                 ", note='" + note + '\'' +
                 ", userId='" + userId + '\'' +
+                ", addressLine='" + addressLine + '\'' +
                 '}';
     }
-
 }
