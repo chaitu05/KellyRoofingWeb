@@ -38,10 +38,6 @@ public class OrderController {
     public ResponseEntity<Order> addOrder(@RequestBody Order order) {
 
         System.out.println("Add order: " + order);
-        order = new Order(12344, 987777, "RED",
-                MaterialType.insulation, OrderType.Delivery, new Date(), new Date(),
-                "Newark", true, false, null,
-                "notes", "36ce3c3e-cc25-11e7-acdc-96395d26a8d8");
         Order so = orderRepository.saveAndFlush(order);
         System.out.println("saved o: " + so);
 

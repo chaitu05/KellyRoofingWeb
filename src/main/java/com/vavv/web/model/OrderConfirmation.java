@@ -25,7 +25,7 @@ public class OrderConfirmation implements Serializable {
     @Column(name = "prior_days", nullable = false)
     private int priorDays;
 
-    @Column(name = "order_id", nullable = false)
+    @Column(name = "order_id")
     private String orderId;
 
     public OrderConfirmation(boolean confirmed, Date confirmedAt, int priorDays, String orderId) {
