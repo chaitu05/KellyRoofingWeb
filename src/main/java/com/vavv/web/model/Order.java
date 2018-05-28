@@ -4,10 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity(name = "Order")
 @Table(name = "orders")
@@ -23,7 +20,8 @@ public class Order implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
-    private Set<OrderConfirmation> orderConfirmations = new HashSet<>();
+    private List<OrderConfirmation> orderConfirmations = new ArrayList<>();
+//    private Set<OrderConfirmation> orderConfirmations = new HashSet<>();
 
     @Column(name = "purchase_order_number", nullable = false)
     private long purchOrderNum;
@@ -108,11 +106,11 @@ public class Order implements Serializable {
         this.guid = guid;
     }
 
-    public Set<OrderConfirmation> getOrderConfirmations() {
+    public List<OrderConfirmation> getOrderConfirmations() {
         return orderConfirmations;
     }
 
-    public void setOrderConfirmations(Set<OrderConfirmation> orderConfirmations) {
+    public void setOrderConfirmations(List<OrderConfirmation> orderConfirmations) {
         this.orderConfirmations = orderConfirmations;
     }
 
