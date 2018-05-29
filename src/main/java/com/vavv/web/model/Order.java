@@ -4,7 +4,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "Order")
 @Table(name = "orders")
@@ -45,6 +48,7 @@ public class Order implements Serializable {
 
     @Column(name = "order_date", nullable = false, columnDefinition = "DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
+//    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "MST")
     private Date orderDate;
 
     @Column(name = "pickup_or_deliver_date", nullable = false, columnDefinition = "DATETIME")

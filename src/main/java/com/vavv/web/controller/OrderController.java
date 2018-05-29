@@ -1,5 +1,6 @@
 package com.vavv.web.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vavv.web.Utilz;
 import com.vavv.web.model.MaterialType;
 import com.vavv.web.model.Order;
@@ -41,7 +42,7 @@ public class OrderController {
         Order so = orderRepository.saveAndFlush(order);
         System.out.println("saved o: " + so);
 
-        return new ResponseEntity(new Order(), HttpStatus.OK);
+        return new ResponseEntity(so, HttpStatus.OK);
     }
 
     @RequestMapping(value = Utilz.UPDATE_ORDER, method = RequestMethod.POST)
@@ -103,6 +104,21 @@ public class OrderController {
     public User getGreeting(@RequestParam(value = "name", defaultValue = "globe") String name) {
         System.out.println("Name sent: " + name);
         return new User();
+    }
+
+    @RequestMapping(value = "/dateExperi", method = RequestMethod.GET)
+    public ResponseEntity getDateExperiment() {
+        System.out.println("In getDateExperiment");
+        return new ResponseEntity(new Object() {
+            public final boolean success = true;
+            @JsonFormat(pattern = "yyyy-MM-dd", timezone = "MST")
+            public final Date dt = new Date();
+            public final String str = "some string";
+            public final char c = 'c';
+            public final int n = 1234;
+            public final long l = 333l;
+            public final double d = 3.3d;
+        }, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/signin-anonymous-obj-return", method = RequestMethod.POST)
