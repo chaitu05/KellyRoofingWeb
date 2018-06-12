@@ -89,8 +89,11 @@ public class OrderController {
 
     @RequestMapping(value = Utilz.GET_ALL_ORDERS_DATE_RANGE, method = RequestMethod.GET)
     public ResponseEntity<List<Order>> getAllOrdersDateRange(
+            @RequestParam(value = "from") @DateTimeFormat(pattern = "MM/dd/yyyy") Date from,
+            @RequestParam(value = "to") @DateTimeFormat(pattern = "MM/dd/yyyy") Date to) {
+    /*public ResponseEntity<List<Order>> getAllOrdersDateRange(
             @RequestParam(value = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date from,
-            @RequestParam(value = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date to) {
+            @RequestParam(value = "to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date to) {*/
 
         System.out.println("From : " + from + "\tTo: " + to);
 
